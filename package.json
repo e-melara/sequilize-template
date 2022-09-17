@@ -6,7 +6,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "css": "postcss public/css/tailwind.css -o public/css/app.css"
   },
   "dependencies": {
     "express": "^4.18.1",

@@ -8,6 +8,9 @@ const port = process.env.PORT || 3000;
 app.set("view engine", "pug");
 app.set("views", "./views");
 
+// carpeta publica
+app.use(express.static("public"));
+
 main(app, express)
   .then(() => {
     app.listen(port, () => {
