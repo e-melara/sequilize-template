@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "Edwin Melara",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "start": "nodemon index.js"
   },
