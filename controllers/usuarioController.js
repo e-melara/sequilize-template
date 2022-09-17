@@ -7,6 +7,7 @@ const login = (req, res) => {
 const register = (req, res) => {
   res.render("auth/register", {
     title: "Register",
+    pagina:  'Registrate'
   });
 };
 
