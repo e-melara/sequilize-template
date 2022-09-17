@@ -1,14 +1,3 @@
-const login = (req, res) => {
-  res.render("auth/login", {
-    title: "Login",
-  });
-};
+export const registerUser = async (req, res) => {
 
-const register = (req, res) => {
-  res.render("auth/register", {
-    title: "Register",
-    pagina:  'Registrate'
-  });
 };
-
-export { login, register };

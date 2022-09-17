@@ -7,11 +7,11 @@ import { main } from "./routes/index.js";
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.set("view engine", "pug");
-app.set("views", "./views");
-
 // carpeta publica
 app.use(express.static("public"));
+
+// leer los datos de un formulario
+app.use(express.urlencoded({ extended: true }));
 
 main(app, express)
   .then(async () => {
