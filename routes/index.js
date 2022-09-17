@@ -1,10 +1,16 @@
 import fs from "fs";
 import path from "path";
 
-const main = (app, express, options = {
-  log: false,
-}) => {
-  const nameApi = "/api/v1";
+const main = (
+  app,
+  express,
+  options = {
+    log: false,
+    api: "/api/v1",
+  }
+) => {
+  const { log, api: nameApi } = options;
+  let routeName = [];
   return new Promise((resolve, reject) => {
     try {
       const pathName = path.join(process.cwd(), "routes");
@@ -17,13 +23,14 @@ const main = (app, express, options = {
             if (name) {
               nameRoute += `/${name}`;
             }
-            if (options.log) {
-              console.log(`Route: ${nameRoute}`);
-            }
+            routeName.push(nameRoute);
             app.use(nameRoute, router);
           });
         }
       });
+      if (log) {
+        console.log(`Routes: ${routeName}`);
+      }
       resolve(true);
     } catch (error) {
       reject(error);
