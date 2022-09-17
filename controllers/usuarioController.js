@@ -4,4 +4,10 @@ const login = (req, res) => {
   });
 };
 
-export { login };
+const register = (req, res) => {
+  res.render("auth/register", {
+    title: "Register",
+  });
+};
+
+export { login, register };
