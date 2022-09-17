@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 app.use(express.static("public"));
 
 // leer los datos de un formulario
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 main(app, express)
