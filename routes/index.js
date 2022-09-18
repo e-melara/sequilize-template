@@ -7,10 +7,11 @@ const main = (
   db,
   options = {
     log: false,
-    api,
+    api: null,
   }
 ) => {
-  const { log, api: nameApi = "/api/v1" } = options;
+  const { log, api = "/api/v1" } = options;
+  const nameApi = api || "/api/v1";
   let routeName = [];
   return new Promise(async (resolve, reject) => {
     try {
@@ -28,7 +29,7 @@ const main = (
       }
 
       if (log) {
-        console.log(`Routes: ${routeName} ${nameApi}`);
+        console.log(`Routes: ${routeName}`);
       }
       resolve(true);
     } catch (error) {

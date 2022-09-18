@@ -1,10 +1,10 @@
-import * as usuarioController from "../controllers/usuarioController.js";
+import * as controller from "../controllers/usuarioController.js";
 
-export default (express) => {
+export default (express, db) => {
   const router = express.Router();
 
   // register user
-  router.post("/register", usuarioController.registerUser);
-  
+  router.post("/register", (req, res) => controller.registerUser(req, res, db));
+
   return { name: "auth", router };
 };

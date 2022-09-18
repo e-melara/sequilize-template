@@ -16,8 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 
 connection()
   .then((db) => {
-    main(app, express, db, { log: true }).then(async () => {
+    main(app, express, db).then(async () => {
       try {
+        await db.sequelize.sync({ force: false });
         app.listen(port, () => {
           console.log("listening on port 3000");
         });

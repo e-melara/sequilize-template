@@ -34,7 +34,8 @@ export async function connection() {
         }
       );
       for (const file of files) {
-        const { default: model } = await import(path.join(baseDir, file));
+        const { default: _default } = await import(path.join(baseDir, file));
+        const model = _default(sequelize);
         models[model.name] = model;
       }
 
