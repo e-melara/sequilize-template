@@ -1,18 +1,17 @@
 import fs from "fs";
 import path from "path";
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const main = (
   app,
   express,
   db,
-  options = {
-    log: false,
-    api: null,
-  }
 ) => {
-  const { log, api = "/api/v1" } = options;
-  const nameApi = api || "/api/v1";
-  let routeName = [];
+  const log = Boolean(process.env.VIEW_ROUTES_LOG) || false;
+  const nameApi = process.env.API_ROUTE_URL || "/api/v1";
+  
   return new Promise(async (resolve, reject) => {
     try {
       const pathName = path.join(process.cwd(), "routes");
@@ -24,13 +23,12 @@ const main = (
         const { default: route } = await import(path.join(pathName, file));
         const { name, router } = route(express, db, app);
         let nameRoute = `${nameApi}${name ? `/${name}` : ""}`;
-        routeName.push(nameRoute);
         app.use(nameRoute, router);
+        if (log) {
+          console.log(`Routes: ${nameRoute}`);
+        }
       }
 
-      if (log) {
-        console.log(`Routes: ${routeName}`);
-      }
       resolve(true);
     } catch (error) {
       reject(error);

@@ -22,6 +22,7 @@ export async function connection() {
           host: process.env.DB_HOST,
           port: process.env.DB_PORT,
           dialect: "postgres",
+          logging: Boolean(process.env.SEQUELIZE_LOGGING),
           define: {
             timestamps: true,
           },
