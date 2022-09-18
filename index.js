@@ -1,8 +1,11 @@
 import express from "express";
+import dotenv from "dotenv";
 
-// import db from "./config/db.js";
-import { connection } from "./models/index.js";
+dotenv.config();
+
 import { main } from "./routes/index.js";
+import errorHandler from "./handler/error.js";
+import { connection } from "./models/index.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,7 +21,11 @@ connection()
   .then((db) => {
     main(app, express, db).then(async () => {
       try {
-        await db.sequelize.sync({ force: Boolean(process.env.SEQUILIZE_SYNC) });
+        await db.sequelize.sync({
+          force: process.env.SEQUILIZE_SYNC === "true",
+        });
+
+        app.use(errorHandler);
         app.listen(port, () => {
           console.log(`listening on port ${port}`);
         });

@@ -1,22 +1,20 @@
 import fs from "fs";
 import path from "path";
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const main = (
-  app,
-  express,
-  db,
-) => {
-  const log = Boolean(process.env.VIEW_ROUTES_LOG) || false;
+const main = (app, express, db) => {
+  const log = process.env.VIEW_ROUTES_LOG === "true" || false;
   const nameApi = process.env.API_ROUTE_URL || "/api/v1";
-  
+
   return new Promise(async (resolve, reject) => {
     try {
       const pathName = path.join(process.cwd(), "routes");
       const files = fs.readdirSync(pathName).filter((file) => {
-        return file.indexOf(".") !== 0 && file !== "index.js";
+        return (
+          file.indexOf(".") !== 0 && file !== "index.js" && file !== "schema"
+        );
       });
 
       for (const file of files) {
