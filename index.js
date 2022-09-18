@@ -20,7 +20,7 @@ connection()
       try {
         await db.sequelize.sync({ force: Boolean(process.env.SEQUILIZE_SYNC) });
         app.listen(port, () => {
-          console.log("listening on port 3000");
+          console.log(`listening on port ${port}`);
         });
       } catch (error) {
         throw new Error(error);
