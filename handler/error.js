@@ -8,8 +8,7 @@ const handler = (err, req, res, next) => {
       }
     });
     res.status(400).json({
-      type: err.type,
-      message: messages,
+      errors: messages,
     });
   } else {
     next(err);

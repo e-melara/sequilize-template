@@ -1,11 +1,11 @@
+import bcrypt from "bcryptjs";
 import { DataTypes, Model } from "sequelize";
 
 export default (sequelize) => {
   class Usuario extends Model {
-    static associate(models) {
-    }
+    static associate(models) {}
   }
-  
+
   Usuario.init(
     {
       nombre: {
@@ -31,6 +31,12 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: "Usuario",
+      hooks: {
+        async beforeCreate(usuario) {
+          const salt = bcrypt.genSaltSync(10);
+          usuario.password = await bcrypt.hash(usuario.password, salt);
+        },
+      },
     }
   );
   return Usuario;
