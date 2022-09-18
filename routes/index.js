@@ -4,32 +4,31 @@ import path from "path";
 const main = (
   app,
   express,
+  db,
   options = {
     log: false,
-    api: "/api/v1",
+    api,
   }
 ) => {
-  const { log, api: nameApi } = options;
+  const { log, api: nameApi = "/api/v1" } = options;
   let routeName = [];
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const pathName = path.join(process.cwd(), "routes");
-      fs.readdirSync(pathName).forEach((file) => {
-        const nameFile = file.substring(0, file.lastIndexOf("."));
-        if (nameFile !== "index") {
-          import(`./${nameFile}.js`).then((module) => {
-            const { name, router } = module.default(express, app);
-            let nameRoute = nameApi;
-            if (name) {
-              nameRoute += `/${name}`;
-            }
-            routeName.push(nameRoute);
-            app.use(nameRoute, router);
-          });
-        }
+      const files = fs.readdirSync(pathName).filter((file) => {
+        return file.indexOf(".") !== 0 && file !== "index.js";
       });
+
+      for (const file of files) {
+        const { default: route } = await import(path.join(pathName, file));
+        const { name, router } = route(express, db, app);
+        let nameRoute = `${nameApi}${name ? `/${name}` : ""}`;
+        routeName.push(nameRoute);
+        app.use(nameRoute, router);
+      }
+
       if (log) {
-        console.log(`Routes: ${routeName}`);
+        console.log(`Routes: ${routeName} ${nameApi}`);
       }
       resolve(true);
     } catch (error) {

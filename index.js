@@ -1,7 +1,7 @@
 import express from "express";
 
-
-import db from "./config/db.js";
+// import db from "./config/db.js";
+import { connection } from "./models/index.js";
 import { main } from "./routes/index.js";
 
 const app = express();
@@ -14,17 +14,17 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-main(app, express)
-  .then(async () => {
-    // conexion a la base de datos
-    try {
-      await db.authenticate();
-      app.listen(port, () => {
-        console.log("listening on port 3000");
-      });
-    } catch (error) {
-      throw new Error(error);
-    }
+connection()
+  .then((db) => {
+    main(app, express, db, { log: true }).then(async () => {
+      try {
+        app.listen(port, () => {
+          console.log("listening on port 3000");
+        });
+      } catch (error) {
+        throw new Error(error);
+      }
+    });
   })
   .catch((error) => {
     console.log(error);
