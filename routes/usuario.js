@@ -14,5 +14,7 @@ export default (express, db) => {
     usuario.register(req, res, db)
   );
 
+  router.get('/confirmar/:token', (req, res) => usuario.confirmar(req, res, db));
+
   return { name: "auth", router };
 };

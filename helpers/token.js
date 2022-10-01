@@ -1,5 +1,5 @@
 const generarId = (large = 36) => {
-  return Date.now().toString(large) + Math.random().toString(large).substring(2);
+  return Math.random().toString(large).substring(2) +  Date.now().toString(large) ;
 }
 
 export {

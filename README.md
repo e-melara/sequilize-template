@@ -3,6 +3,9 @@
 
 #### Para la base de datos
 ```env
+BACKEND_URL=http://localhost
+PORT=3000
+
 DB_HOST = 'localhost'
 DB_USER = 'user_postgress'
 DB_PASS = 'password_postgress'
@@ -10,6 +13,13 @@ DB_NAME = 'db_postgress'
 DB_PORT = 5432
 SEQUELIZE_LOGGING = false
 SEQUILIZE_SYNC = true
+
+# EMAIL (Se uso mailtrap como ejemplo, para los test)
+EMAIL_HOST = 
+EMAIL_PORT = 
+EMAIL_USER = 
+EMAIL_PASS = 
+EMAIL_FROM = 
 ```
 
 ### Para las rutas
