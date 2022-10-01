@@ -4,6 +4,10 @@ import { DataTypes, Model } from "sequelize";
 export default (sequelize) => {
   class Usuario extends Model {
     static associate(models) {}
+
+    async validarPassword(password) {
+      return await bcrypt.compareSync(password, this.password);
+    }
   }
 
   Usuario.init(

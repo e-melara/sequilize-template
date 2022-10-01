@@ -9,6 +9,9 @@ export default (express, db) => {
   });
   const router = express.Router();
 
+  // login
+  router.post("/login", validator.body(schema.login), (req, res) => usuario.login(req, res, db));
+
   // register user
   router.post("/register", validator.body(schema.register), (req, res) =>
     usuario.register(req, res, db)
