@@ -2,7 +2,11 @@ import { DataTypes, Model } from "sequelize";
 
 export default (sequelize) => {
   class Categoria extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.hasOne(models.Propiedad, {
+        foreignKey: "categoria_id",
+      })
+    }
   }
 
   Categoria.init(
