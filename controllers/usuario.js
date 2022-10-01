@@ -1,3 +1,5 @@
+import { generarId } from '../helpers/token.js';
+
 export const register = async (req, res, { models }) => {
   const body = req.body;
 
@@ -15,7 +17,10 @@ export const register = async (req, res, { models }) => {
       ]
     });
   }
-  const usuario = await models.Usuario.create(body);
+  const usuario = await models.Usuario.create({
+    ...body,
+    token: generarId(),
+  });
   return res.status(201).json({
     message: 'Usuario creado correctamente',
     data: usuario,
